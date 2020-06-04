@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using The_End_Of_PWI.Models;
 
 namespace The_End_Of_PWI.Controllers
 {
@@ -28,7 +29,12 @@ namespace The_End_Of_PWI.Controllers
         }
         public PartialViewResult Form()
         {
-            return PartialView("Form");
+            ContactViewModel contact = new ContactViewModel();
+            return PartialView("Form", contact);
+        }
+        public PartialViewResult Home()
+        {
+            return PartialView("MainPage");
         }
     }
 }

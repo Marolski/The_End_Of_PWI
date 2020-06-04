@@ -3,36 +3,32 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Hello</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/style.css">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><button id="formBtn" onclick="getForm()">Form</button></li>
-                    <li><button id="aboutBtn" onclick="getAbout()">About</button></li>
-                    <li><button id="contactBtn" onclick="getContact()">Contact</button></li>
+                    <li><a id="homeBtn" class="button -regular" onclick="getHome()">Home</a></li>
+                    <li><a id="formBtn" class="button -regular" onclick="getForm()">Contact</a></li>
+                    <li><a id="aboutBtn" class="button -regular" onclick="getAbout()">About</a></li>
+                    <li><a id="contactBtn" class="button -regular" onclick="getContact()">Find Me</a></li>
                 </ul>
             </div>
         </div>
     </div>
+    <div id="returnedView">
+        @{Html.RenderPartial("MainPage");}
+    </div>
     <div class="container body-content">
         @RenderBody()
-        <div id="returnedView"></div>
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <footer id="footer">
+            <p>&copy; @DateTime.Now.Year - Marcin Brzóska</p>
         </footer>
     </div>
 
@@ -40,6 +36,18 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script>
+        function getHome() {
+            $('#returnedView').empty();
+            $.ajax({
+                url: '@Url.Action("Home", "Home")',
+                success: function (returnedView) {
+                    $('#returnedView').html(returnedView);
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
         function getAbout() {
             $('#returnedView').empty();
             $.ajax({

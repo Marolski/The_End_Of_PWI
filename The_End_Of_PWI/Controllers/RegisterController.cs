@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services;
 using The_End_Of_PWI.Database;
 using The_End_Of_PWI.Models;
 
@@ -12,15 +13,22 @@ namespace The_End_Of_PWI.Controllers
     {
         private readonly ContactContext dbContext = new ContactContext();
         [HttpPost]
-        public void Register(ContactViewModel contact)
+        public JsonResult Register(ContactModel model)
         {
-            ContactModel ctModel = new ContactModel();
-            ctModel.Telephone = contact.Telephone;
-            ctModel.Name = contact.Name;
-            ctModel.Email = contact.Email;
-            dbContext.ContactDb.Add(ctModel);
-            dbContext.SaveChanges();
-            ViewBag.Info = "Dane zapisane!!";
+            ViewBag.Info = false;
+            try
+            {
+                dbContext.ContactDb.Add(model);
+                dbContext.SaveChanges();
+                ViewBag.Info = true;
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(" Ups, wystąpił błąd. Dane kontakowe nie zostały zapisane.");
+            }
+            return Json("<div>Wkrótce się odezwę!!</div>");
         }
 
     }
