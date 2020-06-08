@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services;
@@ -15,20 +16,44 @@ namespace The_End_Of_PWI.Controllers
         [HttpPost]
         public JsonResult Register(ContactModel model)
         {
+            var res1 = "";
+            var res2 = "";
             ViewBag.Info = false;
             try
             {
+                if (model.Email==null || model.Name==null || model.Telephone==null)
+                {
+                    if (Request.Cookies["language"].Value == "US")
+                    {
+                        res2 = App_LocalResources._Layout_cshtml.value;
+                    }
+                    else res2 = App_LocalResources._Layout_cshtml.valuePL;
+                    return Json("<div>"+res2+"</div>");
+                }
                 dbContext.ContactDb.Add(model);
                 dbContext.SaveChanges();
                 ViewBag.Info = true;
+                if (Request.Cookies["language"].Value == "US")
+                {
+                    res1 = App_LocalResources._Layout_cshtml.communicat;
+                }
+                else res1 = App_LocalResources._Layout_cshtml.communicatPL;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
-                throw new Exception(" Ups, wystąpił błąd. Dane kontakowe nie zostały zapisane.");
+                throw new Exception();
             }
-            return Json("<div>Wkrótce się odezwę!!</div>");
+            return Json("<div>"+res1+"</div>");
+        }
+        public void Language()
+        {
+            if (Request.Cookies["language"].Value == "US")
+            {
+                Response.Cookies["language"].Value = "PL";
+            }
+            else Response.Cookies["language"].Value = "US";
         }
 
     }

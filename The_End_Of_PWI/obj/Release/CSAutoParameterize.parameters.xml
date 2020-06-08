@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="UserContext-Web.config Connection String" description="UserContext Connection String used in web.config by the application to access the database." defaultValue="Data Source=DESKTOP-LQSV232\SQLEXPRESS;Initial Catalog=UserData;Integrated Security=SSPI;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\mbrzo\\source\\repos\\The_End_Of_PWI\\The_End_Of_PWI\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='UserContext']/@connectionString" />
+  </parameter>
+</parameters>

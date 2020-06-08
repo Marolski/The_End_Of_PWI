@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using The_End_Of_PWI.App_LocalResources;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -6,17 +7,24 @@
     <title>Hello</title>
     <link rel="stylesheet" type="text/css" href="~/Content/css/style.css">
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/style")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a id="homeBtn" class="button -regular" onclick="getHome()">Home</a></li>
-                    <li><a id="formBtn" class="button -regular" onclick="getForm()">Contact</a></li>
-                    <li><a id="aboutBtn" class="button -regular" onclick="getAbout()">About</a></li>
-                    <li><a id="contactBtn" class="button -regular" onclick="getContact()">Find Me</a></li>
+                    <li><a id="homeBtn" class="button -regular" onclick="getHome()">@_Layout_cshtml.Home</a></li>
+                    <li><a id="formBtn" class="button -regular" onclick="getForm()">@_Layout_cshtml.Contact</a></li>
+                    <li><a id="aboutBtn" class="button -regular" onclick="getAbout()">@_Layout_cshtml.About</a></li>
+                    <li><a id="contactBtn" class="button -regular" onclick="getContact()">@_Layout_cshtml.Find_Me</a></li>
+                    <li><a id="contactBtn" class="button -regular" href="https://github.com/Marolski/The_End_Of_PWI">GitHub</a></li>
+                </ul>
+                <ul style="float: right; margin-top:1%; margin-bottom: 1%">
+                    <li><a id="languagePL" class="language" onclick="changetoPL()"><img src="~/Content/image/flag1.png" alt="polska" /></a></li>
+                </ul>
+                <ul style="float: right; margin-top:1%; margin-bottom: 1%">
+                    <li><a id="languageUS" class="language" onclick="changetoUS()"><img src="~/Content/image/flag.png" alt="usa" /></a></li>
                 </ul>
             </div>
         </div>
@@ -24,9 +32,8 @@
     <div id="returnedView">
         @{Html.RenderPartial("MainPage");}
     </div>
-    <div class="container body-content">
+    <div>
         @RenderBody()
-        <hr />
         <footer id="footer">
             <p>&copy; @DateTime.Now.Year - Marcin Brzóska</p>
         </footer>
@@ -36,6 +43,48 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script>
+        function changetoPL() {
+            $('#homeBtn').text('@_Layout_cshtml.Home');
+            $('#formBtn').text('@_Layout_cshtml.ContactPl');
+            $('#aboutBtn').text('@_Layout_cshtml.AboutPL');
+            $('#contactBtn').text('@_Layout_cshtml.Find_MePL');
+            $('#contact').text('@_Layout_cshtml.GetContactPL');
+            $('#email').text('@_Layout_cshtml.Email');
+            $('#name').text('@_Layout_cshtml.NamePL');
+            $('#phone').text('@_Layout_cshtml.PhonePL');
+            $('#register').text('@_Layout_cshtml.RegisterPL');
+            $('#desc1').text('@_Layout_cshtml.Description1PL')
+            $('#desc2').text('@_Layout_cshtml.Description2PL')
+            $('#desc3').text('@_Layout_cshtml.Description3PL')
+            $.ajax({
+                url: '@Url.Action("Language", "Register")',
+                success: function () { },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
+        function changetoUS() {
+            $('#homeBtn').text('@_Layout_cshtml.Home');
+            $('#formBtn').text('@_Layout_cshtml.Contact');
+            $('#aboutBtn').text('@_Layout_cshtml.About');
+            $('#contactBtn').text('@_Layout_cshtml.Find_Me');
+            $('#contact').text('@_Layout_cshtml.GetContact');
+            $('#email').text('@_Layout_cshtml.Email');
+            $('#name').text('@_Layout_cshtml.Name');
+            $('#phone').text('@_Layout_cshtml.Phone');
+            $('#register').text('@_Layout_cshtml.Register');
+            $('#desc1').text('@_Layout_cshtml.Description1')
+            $('#desc2').text('@_Layout_cshtml.Description2')
+            $('#desc3').text('@_Layout_cshtml.Description3')
+            $.ajax({
+                url: '@Url.Action("Language", "Register")',
+                success: function () { },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
         function getHome() {
             $('#returnedView').empty();
             $.ajax({

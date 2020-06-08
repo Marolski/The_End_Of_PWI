@@ -11,6 +11,9 @@ namespace The_End_Of_PWI.Controllers
     {
         public ActionResult Index()
         {
+            var cookie = new HttpCookie("language");
+            cookie.Value = "US";
+            Response.Cookies.Add(cookie);
             return View();
         }
 
